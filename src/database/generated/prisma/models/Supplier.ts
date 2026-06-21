@@ -29,7 +29,6 @@ export type SupplierMinAggregateOutputType = {
   fantasy_name: string | null
   cnpj: string | null
   phone_number: string | null
-  cellPhone_number: string | null
 }
 
 export type SupplierMaxAggregateOutputType = {
@@ -37,7 +36,6 @@ export type SupplierMaxAggregateOutputType = {
   fantasy_name: string | null
   cnpj: string | null
   phone_number: string | null
-  cellPhone_number: string | null
 }
 
 export type SupplierCountAggregateOutputType = {
@@ -45,7 +43,6 @@ export type SupplierCountAggregateOutputType = {
   fantasy_name: number
   cnpj: number
   phone_number: number
-  cellPhone_number: number
   email: number
   _all: number
 }
@@ -56,7 +53,6 @@ export type SupplierMinAggregateInputType = {
   fantasy_name?: true
   cnpj?: true
   phone_number?: true
-  cellPhone_number?: true
 }
 
 export type SupplierMaxAggregateInputType = {
@@ -64,7 +60,6 @@ export type SupplierMaxAggregateInputType = {
   fantasy_name?: true
   cnpj?: true
   phone_number?: true
-  cellPhone_number?: true
 }
 
 export type SupplierCountAggregateInputType = {
@@ -72,7 +67,6 @@ export type SupplierCountAggregateInputType = {
   fantasy_name?: true
   cnpj?: true
   phone_number?: true
-  cellPhone_number?: true
   email?: true
   _all?: true
 }
@@ -153,8 +147,7 @@ export type SupplierGroupByOutputType = {
   id: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number: string | null
   email: string[]
   _count: SupplierCountAggregateOutputType | null
   _min: SupplierMinAggregateOutputType | null
@@ -183,8 +176,7 @@ export type SupplierWhereInput = {
   id?: Prisma.StringFilter<"Supplier"> | string
   fantasy_name?: Prisma.StringFilter<"Supplier"> | string
   cnpj?: Prisma.StringFilter<"Supplier"> | string
-  phone_number?: Prisma.StringFilter<"Supplier"> | string
-  cellPhone_number?: Prisma.StringFilter<"Supplier"> | string
+  phone_number?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableListFilter<"Supplier">
   noConformitys?: Prisma.NoConformityListRelationFilter
 }
@@ -193,31 +185,28 @@ export type SupplierOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   fantasy_name?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
-  phone_number?: Prisma.SortOrder
-  cellPhone_number?: Prisma.SortOrder
+  phone_number?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   noConformitys?: Prisma.NoConformityOrderByRelationAggregateInput
 }
 
 export type SupplierWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  cnpj?: string
   AND?: Prisma.SupplierWhereInput | Prisma.SupplierWhereInput[]
   OR?: Prisma.SupplierWhereInput[]
   NOT?: Prisma.SupplierWhereInput | Prisma.SupplierWhereInput[]
   fantasy_name?: Prisma.StringFilter<"Supplier"> | string
-  cnpj?: Prisma.StringFilter<"Supplier"> | string
-  phone_number?: Prisma.StringFilter<"Supplier"> | string
-  cellPhone_number?: Prisma.StringFilter<"Supplier"> | string
+  phone_number?: Prisma.StringNullableFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableListFilter<"Supplier">
   noConformitys?: Prisma.NoConformityListRelationFilter
-}, "id" | "id">
+}, "id" | "id" | "cnpj">
 
 export type SupplierOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fantasy_name?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
-  phone_number?: Prisma.SortOrder
-  cellPhone_number?: Prisma.SortOrder
+  phone_number?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrder
   _count?: Prisma.SupplierCountOrderByAggregateInput
   _max?: Prisma.SupplierMaxOrderByAggregateInput
@@ -231,8 +220,7 @@ export type SupplierScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   fantasy_name?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
   cnpj?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  phone_number?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
-  cellPhone_number?: Prisma.StringWithAggregatesFilter<"Supplier"> | string
+  phone_number?: Prisma.StringNullableWithAggregatesFilter<"Supplier"> | string | null
   email?: Prisma.StringNullableListFilter<"Supplier">
 }
 
@@ -240,8 +228,7 @@ export type SupplierCreateInput = {
   id?: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number?: string | null
   email?: Prisma.SupplierCreateemailInput | string[]
   noConformitys?: Prisma.NoConformityCreateNestedManyWithoutSupplierInput
 }
@@ -250,8 +237,7 @@ export type SupplierUncheckedCreateInput = {
   id?: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number?: string | null
   email?: Prisma.SupplierCreateemailInput | string[]
   noConformitys?: Prisma.NoConformityUncheckedCreateNestedManyWithoutSupplierInput
 }
@@ -260,8 +246,7 @@ export type SupplierUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
   noConformitys?: Prisma.NoConformityUpdateManyWithoutSupplierNestedInput
 }
@@ -270,8 +255,7 @@ export type SupplierUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
   noConformitys?: Prisma.NoConformityUncheckedUpdateManyWithoutSupplierNestedInput
 }
@@ -280,8 +264,7 @@ export type SupplierCreateManyInput = {
   id?: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number?: string | null
   email?: Prisma.SupplierCreateemailInput | string[]
 }
 
@@ -289,8 +272,7 @@ export type SupplierUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
 }
 
@@ -298,8 +280,7 @@ export type SupplierUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
 }
 
@@ -316,7 +297,6 @@ export type SupplierCountOrderByAggregateInput = {
   fantasy_name?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
-  cellPhone_number?: Prisma.SortOrder
   email?: Prisma.SortOrder
 }
 
@@ -325,7 +305,6 @@ export type SupplierMaxOrderByAggregateInput = {
   fantasy_name?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
-  cellPhone_number?: Prisma.SortOrder
 }
 
 export type SupplierMinOrderByAggregateInput = {
@@ -333,7 +312,6 @@ export type SupplierMinOrderByAggregateInput = {
   fantasy_name?: Prisma.SortOrder
   cnpj?: Prisma.SortOrder
   phone_number?: Prisma.SortOrder
-  cellPhone_number?: Prisma.SortOrder
 }
 
 export type SupplierScalarRelationFilter = {
@@ -343,6 +321,10 @@ export type SupplierScalarRelationFilter = {
 
 export type SupplierCreateemailInput = {
   set: string[]
+}
+
+export type NullableStringFieldUpdateOperationsInput = {
+  set?: string | null
 }
 
 export type SupplierUpdateemailInput = {
@@ -368,8 +350,7 @@ export type SupplierCreateWithoutNoConformitysInput = {
   id?: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number?: string | null
   email?: Prisma.SupplierCreateemailInput | string[]
 }
 
@@ -377,8 +358,7 @@ export type SupplierUncheckedCreateWithoutNoConformitysInput = {
   id?: string
   fantasy_name: string
   cnpj: string
-  phone_number: string
-  cellPhone_number: string
+  phone_number?: string | null
   email?: Prisma.SupplierCreateemailInput | string[]
 }
 
@@ -402,8 +382,7 @@ export type SupplierUpdateWithoutNoConformitysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
 }
 
@@ -411,8 +390,7 @@ export type SupplierUncheckedUpdateWithoutNoConformitysInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   fantasy_name?: Prisma.StringFieldUpdateOperationsInput | string
   cnpj?: Prisma.StringFieldUpdateOperationsInput | string
-  phone_number?: Prisma.StringFieldUpdateOperationsInput | string
-  cellPhone_number?: Prisma.StringFieldUpdateOperationsInput | string
+  phone_number?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.SupplierUpdateemailInput | string[]
 }
 
@@ -452,7 +430,6 @@ export type SupplierSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   fantasy_name?: boolean
   cnpj?: boolean
   phone_number?: boolean
-  cellPhone_number?: boolean
   email?: boolean
   noConformitys?: boolean | Prisma.Supplier$noConformitysArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
@@ -463,7 +440,6 @@ export type SupplierSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fantasy_name?: boolean
   cnpj?: boolean
   phone_number?: boolean
-  cellPhone_number?: boolean
   email?: boolean
 }, ExtArgs["result"]["supplier"]>
 
@@ -472,7 +448,6 @@ export type SupplierSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   fantasy_name?: boolean
   cnpj?: boolean
   phone_number?: boolean
-  cellPhone_number?: boolean
   email?: boolean
 }, ExtArgs["result"]["supplier"]>
 
@@ -481,11 +456,10 @@ export type SupplierSelectScalar = {
   fantasy_name?: boolean
   cnpj?: boolean
   phone_number?: boolean
-  cellPhone_number?: boolean
   email?: boolean
 }
 
-export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fantasy_name" | "cnpj" | "phone_number" | "cellPhone_number" | "email", ExtArgs["result"]["supplier"]>
+export type SupplierOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fantasy_name" | "cnpj" | "phone_number" | "email", ExtArgs["result"]["supplier"]>
 export type SupplierInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   noConformitys?: boolean | Prisma.Supplier$noConformitysArgs<ExtArgs>
   _count?: boolean | Prisma.SupplierCountOutputTypeDefaultArgs<ExtArgs>
@@ -502,8 +476,7 @@ export type $SupplierPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     id: string
     fantasy_name: string
     cnpj: string
-    phone_number: string
-    cellPhone_number: string
+    phone_number: string | null
     email: string[]
   }, ExtArgs["result"]["supplier"]>
   composites: {}
@@ -933,7 +906,6 @@ export interface SupplierFieldRefs {
   readonly fantasy_name: Prisma.FieldRef<"Supplier", 'String'>
   readonly cnpj: Prisma.FieldRef<"Supplier", 'String'>
   readonly phone_number: Prisma.FieldRef<"Supplier", 'String'>
-  readonly cellPhone_number: Prisma.FieldRef<"Supplier", 'String'>
   readonly email: Prisma.FieldRef<"Supplier", 'String[]'>
 }
     

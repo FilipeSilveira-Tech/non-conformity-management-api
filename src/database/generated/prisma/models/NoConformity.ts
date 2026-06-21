@@ -614,10 +614,6 @@ export type EnumTypeNoConformityFieldUpdateOperationsInput = {
   set?: $Enums.TypeNoConformity
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type FloatFieldUpdateOperationsInput = {
   set?: number
   increment?: number

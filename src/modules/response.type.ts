@@ -1,7 +1,7 @@
 export interface RepositorieResponse {
-    statusCode: number;
-    success: boolean;
-    timestamp: string;
-    message?: string;
-    data?: object;
+  statusCode: number;
+  success: boolean;
+  timestamp: string;
+  message?: string;
+  data?: object;
 }

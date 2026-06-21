@@ -11,7 +11,7 @@ description: Server de desenvolvimento da API
 paths:
   /users:
     post:
-      summary: Criação de usuários com informações no body.
+      summary: Criação de usuários com informações enviada no body do request.
       description: Cria o usuário no sistema e salva no banco de dados.
       requestBody:
         required: true
@@ -127,6 +127,67 @@ paths:
                   message:
                     type: string
                     example: 'Usuário não encontrado'
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+
+  /suppliers:
+    post:
+      summary: Criação de fornecedores com informações passadas via body do request.
+      description: Cria fornecedor e salva no banco de dados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fantasy_name:
+                  type: string
+                cnpj:
+                  type: string
+                phone_number:
+                  type: string
+                cellPhone_number:
+                  type: string
+                email:
+                  type: array
+              required:
+                - fantasy_name
+                - cnpj
+      responses:
+        "201":
+          description: Fornecedor criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 201
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: 'Fornecedor criado com sucesso!'
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T22:04:48.450Z"
+        "409":
+          description: Retorno para quando já existe fornecedor com CNPJ cadastrado.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "CNPJ já cadastrado!"
                   timestamp:
                     type: string
                     example: "2026-06-21T14:31:17.900Z"

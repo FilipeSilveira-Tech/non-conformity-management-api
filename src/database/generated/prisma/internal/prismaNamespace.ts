@@ -758,7 +758,6 @@ export const SupplierScalarFieldEnum = {
   fantasy_name: 'fantasy_name',
   cnpj: 'cnpj',
   phone_number: 'phone_number',
-  cellPhone_number: 'cellPhone_number',
   email: 'email'
 } as const
 

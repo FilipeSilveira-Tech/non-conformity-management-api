@@ -20,9 +20,8 @@ model User {
 model Supplier {
   id               String @id @unique @default(uuid())
   fantasy_name     String
-  cnpj             String
-  phone_number     String
-  cellPhone_number String
+  cnpj             String @unique
+  phone_number     String?
 
   email         String[]
   noConformitys NoConformity[]
