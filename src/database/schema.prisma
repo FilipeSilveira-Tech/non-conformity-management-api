@@ -1,0 +1,90 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id                  String                @id @unique @default(uuid())
+  name                String
+  username            String                @unique
+  email               String                @unique
+  password            String
+  noConformitys       NoConformity[]
+  noConfomirtyHistory NoConformityHistory[]
+}
+
+model Supplier {
+  id               String @id @unique @default(uuid())
+  fantasy_name     String
+  cnpj             String
+  phone_number     String
+  cellPhone_number String
+
+  email         String[]
+  noConformitys NoConformity[]
+}
+
+enum TypeNoConformity {
+  FATURADO_A_MAIS
+  FATURADO_A_MENOS
+  DIFERENTE_DO_PEDIDO
+  AVARIADO
+  NAO_ENVIADO
+  OUTROS
+}
+
+enum StatusNoConformity {
+  ABERTA
+  EM_ANALISE
+  AGUARDANDO_FORNECEDOR
+  AGUARDANDO_DEVOLUCAO
+  DEVOLVIDO
+  FINALIZADA
+  CANCELADA
+}
+
+model NoConformity {
+  id Int @id @unique @default(autoincrement())
+
+  // Dados da Não conformidade:
+  invoice             String
+  supplier_id         String
+  supplier            Supplier              @relation(fields: [supplier_id], references: [id])
+  opening_date        DateTime              @default(now())
+  type_noConformity   TypeNoConformity
+  description         String?
+  expected_quantity   Float
+  received_quantity   Float
+  divergent_quantity  Float
+  status              StatusNoConformity
+  responsibleUser_id  String
+  responsibleUser     User                  @relation(fields: [responsibleUser_id], references: [id])
+  noConformityHistory NoConformityHistory[]
+}
+
+enum ActionHistory {
+  ALTERADO_NOTAFISCAL
+  ALTERADO_FORNECEDOR
+  ALTERADO_DATA_ABERTURA
+  ALTERADO_TIPO
+  ALTERADO_DESCRICAO
+  ALTERADO_QUANTIDADE_EXPERADA
+  ALTERADO_QUANTIDADE_RECEBIDA
+  ALTERADO_QUANTIDADE_DIVERGENTE
+  ALTERADO_STATUS
+  ALTERADO_RESPONSAVEL
+}
+
+model NoConformityHistory {
+  id                 String        @id @unique @default(uuid())
+  noConformity_id    Int
+  noConfomiry        NoConformity  @relation(fields: [noConformity_id], references: [id])
+  responsibleUser_id String
+  responsibleUser    User          @relation(fields: [responsibleUser_id], references: [id])
+  action_realize     ActionHistory
+  observation        String
+}

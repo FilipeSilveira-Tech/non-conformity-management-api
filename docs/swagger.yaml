@@ -1,0 +1,132 @@
+openapi: 3.0.0
+info:
+  title: API Desafio 01 - Junior Back-End
+  version: 1.0.0
+  description: Documentação das rotas do desafio.
+
+servers:
+  - url: http://localhost:3000
+description: Server de desenvolvimento da API
+
+paths:
+  /users:
+    post:
+      summary: Criação de usuários com informações no body.
+      description: Cria o usuário no sistema e salva no banco de dados.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                username:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - name
+                - username
+                - email
+                - password
+      responses:
+        "201": # Status code
+          description: Usuário criado com sucesso.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Usuário criado!"
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+        "409":
+          description: Retorno para um usuário que já existe com username ou email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Username ou email já existente"
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+
+  /users/{username}:              
+    get:
+      summary: Retorna um usuário procurando pelo username
+      description: Retorno de usuários já cadastrados no banco de dados.
+      parameters:
+        - in: path
+          name: username
+          schema:
+            type: string
+          required: true
+          description: Nome de usuário que deseja buscar
+      responses:
+        "200":
+          description: Sucesso em encontrar o usuário, retornando um objeto com informações do usuário
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: "7922c6a6-64b9-42bc-aed3-1e5ddbb1f5f1"
+                          username:
+                            type: string
+                            example: "fsilveira"
+                          noConformitys:
+                            type: array
+                            items:
+                              type: string
+        "404":
+          description: Quando não encontrado o usuário
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Usuário não encontrado'
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
