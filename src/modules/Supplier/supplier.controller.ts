@@ -31,7 +31,7 @@ export const createSupplier = async (
   }
 
   //2. Chamada do Service passando os dados validados
-  const { response } = await supplierService.createService(
+  const { response } = await supplierService.createSupplier(
     supplierValidate.data,
   );
 
@@ -52,9 +52,16 @@ export const getSupplier = async (
     });
   }
 
-  const { response } = await supplierService.getService(
+  const { response } = await supplierService.getSupplier(
     getSupplierValidate.data!.cnpj,
   );
+  return res.status(response.statusCode).json(response);
+};
 
+export const getAllSupplier = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const { response } = await supplierService.getAllSupplier();
   return res.status(response.statusCode).json(response);
 };

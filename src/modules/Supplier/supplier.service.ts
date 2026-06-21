@@ -15,7 +15,7 @@ export class SupplierService {
    * @param {SupplierCreate} data - Os dados brutos do fornecedor vindo do Controller
    * @returns {Promise<{ response: RepositorieResponse }>} Objeto contendo a resposta detalhada do repositório.
    */
-  public async createService(
+  public async createSupplier(
     data: SupplierCreate,
   ): Promise<{ response: RepositorieResponse }> {
     if (data.email == null) {
@@ -26,10 +26,15 @@ export class SupplierService {
     return { response };
   }
 
-  public async getService(
+  public async getSupplier(
     cnpjFornecedor: string,
   ): Promise<{ response: RepositorieResponse }> {
     const response = await supplierRepository.getSupplier(cnpjFornecedor);
+    return { response };
+  }
+
+  public async getAllSupplier(): Promise<{ response: RepositorieResponse }> {
+    const response = await supplierRepository.getAllSuppliers();
     return { response };
   }
 }

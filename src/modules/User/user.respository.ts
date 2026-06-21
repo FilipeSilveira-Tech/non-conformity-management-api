@@ -22,6 +22,7 @@ export class UserRepository {
    */
   public async createUser(userInfo: UserCreated): Promise<RepositorieResponse> {
     try {
+      const inicio = performance.now();
       await this.prisma.user.create({
         data: {
           name: userInfo.name,
@@ -35,6 +36,7 @@ export class UserRepository {
         success: true,
         message: "Usuário criado!",
         timestamp: timeISO,
+        tempoExecucao: performance.now() - inicio,
       };
     } catch (erro) {
       console.error("❌ Error na criação do usuário");
@@ -63,6 +65,7 @@ export class UserRepository {
    */
   async getUser(usernameUsuario: string): Promise<RepositorieResponse> {
     try {
+      const inicio = performance.now();
       const user = await this.prisma.user.findUnique({
         where: { username: usernameUsuario },
         select: { id: true, username: true, noConformitys: true },
@@ -74,12 +77,14 @@ export class UserRepository {
           success: false,
           message: "Usuário não encontrado",
           timestamp: timeISO,
+          tempoExecucao: performance.now() - inicio,
         };
       }
       return {
         statusCode: 200,
         success: true,
         timestamp: timeISO,
+        tempoExecucao: performance.now() - inicio,
         data: { user },
       };
     } catch (erro) {

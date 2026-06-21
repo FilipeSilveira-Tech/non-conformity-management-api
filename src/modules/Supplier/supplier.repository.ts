@@ -25,6 +25,7 @@ export class SupplierRepository {
     data_supplier: SupplierCreate,
   ): Promise<RepositorieResponse> {
     try {
+      const inicio = performance.now();
       await this.prisma.supplier.create({
         data: {
           id: data_supplier.id!,
@@ -39,6 +40,7 @@ export class SupplierRepository {
         success: true,
         message: "Fornecedor criado com sucesso!",
         timestamp: timeISO,
+        tempoExecucao: performance.now() - inicio,
       };
     } catch (erro) {
       console.error("❌ Erro ao criar o fornecedor:", erro);
@@ -57,8 +59,11 @@ export class SupplierRepository {
     }
   }
 
-  public async getSupplier(cnpjFornecedor: string) {
+  public async getSupplier(
+    cnpjFornecedor: string,
+  ): Promise<RepositorieResponse> {
     try {
+      const inicio = performance.now();
       const supplier = await this.prisma.supplier.findUnique({
         where: { cnpj: cnpjFornecedor },
       });
@@ -69,13 +74,48 @@ export class SupplierRepository {
           success: false,
           message: "Fornecedor não encontrado!",
           timestamp: timeISO,
+          tempoExecucao: performance.now() - inicio,
         };
       }
       return {
         statusCode: 200,
         success: true,
         timestamp: timeISO,
+        tempoExecucao: performance.now() - inicio,
         data: { supplier },
+      };
+    } catch (erro) {
+      console.error("❌ Erro interno", erro);
+      return {
+        statusCode: 500,
+        success: false,
+        message: "Erro interno",
+        timestamp: timeISO,
+      };
+    }
+  }
+
+  public async getAllSuppliers(): Promise<RepositorieResponse> {
+    try {
+      const inicio = performance.now();
+      const suppliers = await this.prisma.supplier.findMany();
+
+      if (suppliers == null) {
+        return {
+          statusCode: 200,
+          success: true,
+          timestamp: timeISO,
+          tempoExecucao: performance.now() - inicio,
+          data: { suppliers },
+        };
+      }
+
+      return {
+        statusCode: 200,
+        success: true,
+        timestamp: timeISO,
+        tempoExecucao: performance.now() - inicio,
+        data: { suppliers },
       };
     } catch (erro) {
       console.error("❌ Erro interno", erro);

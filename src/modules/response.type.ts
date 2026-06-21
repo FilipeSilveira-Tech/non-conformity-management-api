@@ -4,4 +4,5 @@ export interface RepositorieResponse {
   timestamp: string;
   message?: string;
   data?: object;
+  tempoExecucao?: number;
 }
