@@ -56,4 +56,35 @@ export class SupplierRepository {
       return { statusCode: 500, success: false, timestamp: timeISO };
     }
   }
+
+  public async getSupplier(cnpjFornecedor: string) {
+    try {
+      const supplier = await this.prisma.supplier.findUnique({
+        where: { cnpj: cnpjFornecedor },
+      });
+
+      if (supplier == null) {
+        return {
+          statusCode: 404,
+          success: false,
+          message: "Fornecedor não encontrado!",
+          timestamp: timeISO,
+        };
+      }
+      return {
+        statusCode: 200,
+        success: true,
+        timestamp: timeISO,
+        data: { supplier },
+      };
+    } catch (erro) {
+      console.error("❌ Erro interno", erro);
+      return {
+        statusCode: 500,
+        success: false,
+        message: "Erro interno",
+        timestamp: timeISO,
+      };
+    }
+  }
 }

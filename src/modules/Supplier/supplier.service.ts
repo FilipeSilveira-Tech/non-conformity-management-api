@@ -25,4 +25,11 @@ export class SupplierService {
     const response = await supplierRepository.createSupplier(data);
     return { response };
   }
+
+  public async getService(
+    cnpjFornecedor: string,
+  ): Promise<{ response: RepositorieResponse }> {
+    const response = await supplierRepository.getSupplier(cnpjFornecedor);
+    return { response };
+  }
 }

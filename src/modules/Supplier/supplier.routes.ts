@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createSupplie } from "./supplier.controller";
+import { createSupplier, getSupplier } from "./supplier.controller";
 
 const router = Router();
 
-router.post("/suppliers", createSupplie);
+router.post("/suppliers", createSupplier);
+router.get("/suppliers/:cnpj", getSupplier);
 
 export default router;

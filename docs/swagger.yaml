@@ -22,12 +22,16 @@ paths:
               properties:
                 name:
                   type: string
+                  example: "Juliano Silva"
                 username:
                   type: string
+                  example: "juliano_silva"
                 email:
                   type: string
+                  example: "julianosilva2026@email.com"
                 password:
                   type: string
+                  example: "Senha_Segura#2026"
               required:
                 - name
                 - username
@@ -144,14 +148,16 @@ paths:
               properties:
                 fantasy_name:
                   type: string
+                  example: "Fornecedor Fulano"
                 cnpj:
                   type: string
+                  example: "12345678123412"
                 phone_number:
                   type: string
-                cellPhone_number:
-                  type: string
+                  example: "32999999999"
                 email:
                   type: array
+                  example: ["conato@fornecedor.com"]
               required:
                 - fantasy_name
                 - cnpj
@@ -188,6 +194,76 @@ paths:
                   message:
                     type: string
                     example: "CNPJ já cadastrado!"
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+  /suppliers/{cnpj}:              
+    get:
+      summary: Realiza a busca de um fornecedor pelo CNPJ
+      description: Retorna um fornecedor pela busca com CNPJ
+      parameters:
+        - in: path
+          name: cnpj
+          schema:
+            type: string
+          required: true
+          description: Numero do CNPJ do fornecedor que deseja buscar
+      responses:
+        "200":
+          description: Sucesso em encontrar o fornecedor, retornando um objeto com informações do fornecedor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  success:
+                    type: boolean
+                    example: true
+                  timestamp:
+                    type: string
+                    example: "2026-06-21T14:31:17.900Z"
+                  data:
+                    type: object
+                    properties:
+                      supplier:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            example: "7922c6a6-64b9-42bc-aed3-1e5ddbb1f5f1"
+                          fantasy_name:
+                            type: string
+                            example: "Fornecedor Fulano de Tal"
+                          cnpj:
+                            type: string
+                            example: "12345678123412"
+                          phone_number:
+                            type: string
+                            example: "32999999999"
+                          email:
+                            type: array
+                            items:
+                              type: string
+                            example: ["contato@fornecedor.com", "financeiro@fornecedor.com"]
+        "404":
+          description: Retorno para quando não é encontrado o fornecedor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 404
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: 'Fornecedor não encontrado'
                   timestamp:
                     type: string
                     example: "2026-06-21T14:31:17.900Z"

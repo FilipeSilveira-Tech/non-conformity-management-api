@@ -1,9 +1,9 @@
-import type { Request, Response } from 'express';
+import type { Request, Response } from "express";
 
-import { SupplierValidate } from './supplier.schema';
-import { SupplierService } from './supplier.service';
+import { SupplierCreateValidate, SupplierGetValidate } from "./supplier.schema";
+import { SupplierService } from "./supplier.service";
 
-const supplierService = new SupplierService()
+const supplierService = new SupplierService();
 
 /**
  * Controller responsável por lidar com a requisição HTTP de criação de um fornecedor.
@@ -14,22 +14,47 @@ const supplierService = new SupplierService()
  * @param {Response} res - Objeto de resposta do Express para retornar o status e dados.
  * @returns {Promise<Response>} Retorna uma promessa com a resposta HTTP (JSON).
  */
-export const createSupplie = async (req: Request, res: Response): Promise<Response> => {
-    //1. Validação de dados com Zod.
-    const supplierValidate = await SupplierValidate.safeParse(req.body);
+export const createSupplier = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  //1. Validação de dados com Zod.
+  const supplierValidate = await SupplierCreateValidate.safeParse(req.body);
 
-    if (!supplierValidate.success) {
-        // o 'return' é crucial para execução caso falte algum parâmetro!
-        return res.status(400).json({
-            success: false,
-            message: "Todos os parametros são necessários",
-            error: supplierValidate.error.format()  // .format() deixa o erro do Zod mais amigavel
-        });
-    }
+  if (!supplierValidate.success) {
+    // o 'return' é crucial para execução caso falte algum parâmetro!
+    return res.status(400).json({
+      success: false,
+      message: "Todos os parametros são necessários",
+      error: supplierValidate.error.format(), // .format() deixa o erro do Zod mais amigavel
+    });
+  }
 
-    //2. Chamada do Service passando os dados validados
-    const { response } = await supplierService.createService(supplierValidate.data);
+  //2. Chamada do Service passando os dados validados
+  const { response } = await supplierService.createService(
+    supplierValidate.data,
+  );
 
-    //3. Retorno da respota baseada no que o Repository/Service resolve/
-    return res.status(response.statusCode).json(response);
-}
+  //3. Retorno da respota baseada no que o Repository/Service resolve/
+  return res.status(response.statusCode).json(response);
+};
+
+export const getSupplier = async (
+  req: Request,
+  res: Response,
+): Promise<Response> => {
+  const getSupplierValidate = SupplierGetValidate.safeParse(req.params);
+  if (!getSupplierValidate.success) {
+    return res.status(400).json({
+      success: false,
+      message: "O CNPJ deve ser em formato de 'STRING'",
+      error: getSupplierValidate.error.format(),
+    });
+  }
+
+  const { response } = await supplierService.getService(
+    getSupplierValidate.data!.cnpj,
+  );
+
+  return res.status(response.statusCode).json(response);
+};

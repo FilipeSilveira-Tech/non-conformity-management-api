@@ -61,10 +61,10 @@ export class UserRepository {
    * @returns {Promise<RepositorieResponse>} Uma promessa que resolve com a resposta do repositório, contendo o status, sucesso e mensagem/timestamp
    * @throws {Erro} - Para erros internos genèricos do servidor (Retorna 500)
    */
-  async getUser(username: string): Promise<RepositorieResponse> {
+  async getUser(usernameUsuario: string): Promise<RepositorieResponse> {
     try {
       const user = await this.prisma.user.findUnique({
-        where: { username: username },
+        where: { username: usernameUsuario },
         select: { id: true, username: true, noConformitys: true },
       });
 
